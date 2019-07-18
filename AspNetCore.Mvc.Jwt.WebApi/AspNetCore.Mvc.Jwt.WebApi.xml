@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AspNetCore.Mvc.Jwt.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:AspNetCore.Mvc.Jwt.WebApi.Controllers.AccountController.Authenticate(AspNetCore.Mvc.Jwt.WebApi.Models.User)">
+            <summary>
+            Authenticate the user by name
+            </summary>
+            <remarks>In this particulary case password is not required, its only necessary to fill in the username because we dont have a pasword to check</remarks>
+            <param name="user">User</param>
+            <response code="200">Succesful operation</response>
+            <response code="400">Incorrect user name</response>
+            <response code="500">Internal server error</response>
+            <returns>User</returns>
+        </member>
+        <member name="M:AspNetCore.Mvc.Jwt.WebApi.Controllers.ClientsController.GetByName(System.String)">
+            <summary>
+            Get user data filtered by user name
+            </summary>
+            <param name="username">User name</param>
+            <response code="200">Succesful operation</response>
+            <response code="401">Unauthorized</response>
+            <response code="403">Forbidden access</response>
+            <response code="404">User not found</response>
+            <response code="500">Internal server error</response>
+            <returns>User</returns>
+        </member>
+        <member name="M:AspNetCore.Mvc.Jwt.WebApi.Controllers.ClientsController.GetById(System.String)">
+            <summary>
+            Get user data filtered by user id
+            </summary>
+            <param name="userId">User id</param>
+            <response code="200">Succesful operation</response>
+            <response code="401">Unauthorized</response>
+            <response code="403">Forbidden access</response>
+            <response code="404">User not found</response>
+            <response code="500">Internal server error</response>
+            <returns>User</returns>
+        </member>
+        <member name="M:AspNetCore.Mvc.Jwt.WebApi.Controllers.ClientsController.GetByPolicyNumber(System.String)">
+            <summary>
+            Get the user linked to a policy number
+            </summary>
+            <param name="policyNumber">Policy number</param>
+            <response code="200">Succesful operation</response>
+            <response code="401">Unauthorized</response>
+            <response code="403">Forbidden access</response>
+            <response code="404">Policy not found</response>
+            <response code="500">Internal server error</response>
+            <returns>Client</returns>
+        </member>
+        <member name="M:AspNetCore.Mvc.Jwt.WebApi.Controllers.PoliciesController.GetByClientName(System.String)">
+            <summary>
+            Get the list of policies linked to a user name
+            </summary>
+            <param name="username">User name</param>
+            <response code="200">Succesful operation</response>
+            <response code="401">Unauthorized</response>
+            <response code="403">Forbidden access</response>
+            <response code="404">User not found</response>
+            <response code="500">Internal server error</response>
+            <returns>List of policies</returns>
+        </member>
+        <member name="F:AspNetCore.Mvc.Jwt.WebApi.SwaggerConfiguration.EndpointDescription">
+            <summary>
+            Foo API v1
+            </summary>
+        </member>
+        <member name="F:AspNetCore.Mvc.Jwt.WebApi.SwaggerConfiguration.EndpointUrl">
+            <summary>
+            /swagger/v1/swagger.json
+            </summary>
+        </member>
+        <member name="F:AspNetCore.Mvc.Jwt.WebApi.SwaggerConfiguration.ContactName">
+            <summary>
+            Gabriel Dal Borgo
+            </summary>
+        </member>
+        <member name="F:AspNetCore.Mvc.Jwt.WebApi.SwaggerConfiguration.ContactUrl">
+            <summary>
+            https://github.com/gabrieldalborgo/aspnetcore-mvc-jwt-webapi
+            </summary>
+        </member>
+        <member name="F:AspNetCore.Mvc.Jwt.WebApi.SwaggerConfiguration.DocNameV1">
+            <summary>
+            v1
+            </summary>
+        </member>
+        <member name="F:AspNetCore.Mvc.Jwt.WebApi.SwaggerConfiguration.DocInfoTitle">
+            <summary>
+            Insurance Company API
+            </summary>
+        </member>
+        <member name="F:AspNetCore.Mvc.Jwt.WebApi.SwaggerConfiguration.DocInfoVersion">
+            <summary>
+            v1
+            </summary>
+        </member>
+        <member name="F:AspNetCore.Mvc.Jwt.WebApi.SwaggerConfiguration.DocInfoDescription">
+            <summary>
+            Insurance Company Api - Web API in ASP.NET Core 2 with JWT auth
+            </summary>
+        </member>
+    </members>
+</doc>
