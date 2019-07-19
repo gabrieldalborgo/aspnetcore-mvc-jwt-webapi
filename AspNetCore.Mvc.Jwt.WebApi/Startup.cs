@@ -1,7 +1,9 @@
-﻿using AspNetCore.Mvc.Jwt.WebApi.Models;
+﻿using AspNetCore.Mvc.Jwt.WebApi.Middlewares;
+using AspNetCore.Mvc.Jwt.WebApi.Models;
 using AspNetCore.Mvc.Jwt.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 
@@ -103,11 +106,8 @@ namespace AspNetCore.Mvc.Jwt.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+
+            app.UseMiddleware<GlobalExceptionMiddleware>();
 
             app.UseCors(x => x
                 .AllowAnyOrigin()
