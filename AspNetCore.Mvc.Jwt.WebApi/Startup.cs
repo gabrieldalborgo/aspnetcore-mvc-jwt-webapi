@@ -1,10 +1,12 @@
-﻿using AspNetCore.Mvc.Jwt.WebApi.Services;
+﻿using AspNetCore.Mvc.Jwt.WebApi.Models;
+using AspNetCore.Mvc.Jwt.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -30,8 +32,9 @@ namespace AspNetCore.Mvc.Jwt.WebApi
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddOptions();
+            services.Configure<AppConfig>(Configuration.GetSection("AppConfig"));
 
-            var signingKey = Encoding.Default.GetBytes("ValidTokenSigningKey");
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -44,14 +47,14 @@ namespace AspNetCore.Mvc.Jwt.WebApi
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(signingKey),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(services.BuildServiceProvider().GetService<IOptions<AppConfig>>().Value.TokenSigningKey)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
             });
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IPolicyService, PolicyService>();
+            services.AddHttpClient<IUserService, UserService>();
+            services.AddHttpClient<IPolicyService, PolicyService>();
             services.AddScoped<IAccountService, AccountService>();
 
             // Register the Swagger generator, defining one or more Swagger documents

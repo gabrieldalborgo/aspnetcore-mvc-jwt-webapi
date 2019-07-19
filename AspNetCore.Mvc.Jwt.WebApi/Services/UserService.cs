@@ -1,4 +1,5 @@
 ﻿using AspNetCore.Mvc.Jwt.WebApi.Models;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,18 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Services
 
     public class UserService : IUserService
     {
-        private const string USERS_URL = "http://www.mocky.io/v2/5808862710000087232b75ac";
+        private readonly HttpClient httpClient;
+        private readonly string url;
+
+        public UserService(HttpClient httpClient, IOptions<AppConfig> options)
+        {
+            this.httpClient = httpClient;
+            this.url = options.Value.UrlUsers;
+        }
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            using (var httpClient = new HttpClient())
-            using(var response = await httpClient.GetAsync(USERS_URL))
+            using(var response = await httpClient.GetAsync(url))
             {
                 var json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<UsersDTO>(json).Users;

@@ -1,4 +1,5 @@
 ﻿using AspNetCore.Mvc.Jwt.WebApi.Models;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,18 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Services
 
     public class PolicyService : IPolicyService
     {
-        private const string POLICIES_URL = "http://www.mocky.io/v2/580891a4100000e8242b75c5";
+        private readonly HttpClient httpClient;
+        private readonly string url;
+
+        public PolicyService(HttpClient httpClient, IOptions<AppConfig> options)
+        {
+            this.httpClient = httpClient;
+            this.url = options.Value.UrlPolicies;
+        }
 
         public async Task<IEnumerable<Policy>> GetAll()
         {
-            using (var httpClient = new HttpClient())
-            using(var response = await httpClient.GetAsync(POLICIES_URL))
+            using(var response = await httpClient.GetAsync(url))
             {
                 var json = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<PoliciesDTO>(json).Policies;
