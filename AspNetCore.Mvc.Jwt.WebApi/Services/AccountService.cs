@@ -14,17 +14,17 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Services
 
     public class AccountService : IAccountService
     {
-        private IClientService clientService;
+        private IUserService userService;
 
-        public AccountService(IClientService clientService)
+        public AccountService(IUserService userService)
         {
-            this.clientService = clientService;
+            this.userService = userService;
         }
 
         public async Task<string> Authenticate(string username, string password)
         {
             // Assume ClientService as source of truth
-            var client = await this.clientService.GetByName(username);
+            var client = await this.userService.GetByName(username);
 
             if (client == null)
                 return null;

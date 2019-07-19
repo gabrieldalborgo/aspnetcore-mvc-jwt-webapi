@@ -13,10 +13,10 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Controllers
     [ApiController]
     public class PoliciesController : ControllerBase
     {
-        private IClientService clientService;
+        private IUserService clientService;
         private IPolicyService policyService;
 
-        public PoliciesController(IClientService clientService, IPolicyService policyService)
+        public PoliciesController(IUserService clientService, IPolicyService policyService)
         {
             this.clientService = clientService;
             this.policyService = policyService;
@@ -39,7 +39,7 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Controllers
             var client = await this.clientService.GetByName(username);
             if (client == null)
                 return NotFound();
-            var policies = await this.policyService.GetByClientId(client.Id);
+            var policies = await this.policyService.GetByUserId(client.Id);
             return Ok(policies);
         }
     }

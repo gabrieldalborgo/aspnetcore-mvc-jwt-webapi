@@ -9,9 +9,9 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Services
 {
     public interface IPolicyService
     {
-        Task<Policy> GetById(string id);
+        Task<Policy> GetByPolicyNumber(string policyNumber);
 
-        Task<IEnumerable<Policy>> GetByClientId(string id);
+        Task<IEnumerable<Policy>> GetByUserId(string userId);
     }
 
     public class PolicyService : IPolicyService
@@ -28,16 +28,16 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Services
             }
         }
 
-        public async Task<IEnumerable<Policy>> GetByClientId(string clientId)
+        public async Task<IEnumerable<Policy>> GetByUserId(string userId)
         {
             var policies = await this.GetAll();
-            return policies.Where(x => x.ClientId == clientId);
+            return policies.Where(x => x.ClientId == userId);
         }
 
-        public async Task<Policy> GetById(string policyId)
+        public async Task<Policy> GetByPolicyNumber(string policyNumber)
         {
             var policies = await this.GetAll();
-            return policies.SingleOrDefault(x => x.Id == policyId);
+            return policies.SingleOrDefault(x => x.Id == policyNumber);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Controllers
         /// <response code="500">Internal server error</response>
         /// <returns>User</returns>
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]User user)
+        public async Task<IActionResult> Authenticate([FromBody]LoginDTO user)
         {
             var token = await accountService.Authenticate(user.Username, user.Password);
 

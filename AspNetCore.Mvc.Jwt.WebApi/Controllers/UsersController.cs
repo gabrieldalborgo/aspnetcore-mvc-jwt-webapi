@@ -10,14 +10,14 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientsController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private IClientService clientService;
+        private IUserService userService;
         private IPolicyService policyService;
 
-        public ClientsController(IClientService clientService, IPolicyService policyService)
+        public UsersController(IUserService userService, IPolicyService policyService)
         {
-            this.clientService = clientService;
+            this.userService = userService;
             this.policyService = policyService;
         }
 
@@ -32,10 +32,10 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Controllers
         /// <response code="500">Internal server error</response>
         /// <returns>User</returns>
         [Authorize(Roles = "admin,user")]
-        [HttpGet("name/{name}")]
-        public async Task<ActionResult<Client>> GetByName(string username)
+        [HttpGet("name/{username}")]
+        public async Task<ActionResult<User>> GetByName(string username)
         {
-            var client = await this.clientService.GetByName(username);
+            var client = await this.userService.GetByName(username);
             if (client == null)
                 return NotFound();
             return Ok(client);
@@ -52,10 +52,10 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Controllers
         /// <response code="500">Internal server error</response>
         /// <returns>User</returns>
         [Authorize(Roles = "admin,user")]
-        [HttpGet("id/{id}")]
-        public async Task<ActionResult<Client>> GetById(string userId)
+        [HttpGet("id/{userId}")]
+        public async Task<ActionResult<User>> GetById(string userId)
         {
-            var client = await this.clientService.GetById(userId);
+            var client = await this.userService.GetById(userId);
             if (client == null)
                 return NotFound();
             return Ok(client);
@@ -70,12 +70,12 @@ namespace AspNetCore.Mvc.Jwt.WebApi.Controllers
         /// <response code="403">Forbidden access</response>
         /// <response code="404">Policy not found</response>
         /// <response code="500">Internal server error</response>
-        /// <returns>Client</returns>
+        /// <returns>User</returns>
         [Authorize(Roles = "admin")]
         [HttpGet("policy/{policyNumber}")]
-        public async Task<ActionResult<Client>> GetByPolicyNumber(string policyNumber)
+        public async Task<ActionResult<User>> GetByPolicyNumber(string policyNumber)
         {
-            var policy = await this.policyService.GetById(policyNumber);
+            var policy = await this.policyService.GetByPolicyNumber(policyNumber);
             if (policy == null)
                 return NotFound();
             return await this.GetById(policy.ClientId);

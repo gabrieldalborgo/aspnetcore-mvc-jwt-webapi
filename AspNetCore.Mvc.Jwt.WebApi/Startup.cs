@@ -50,7 +50,7 @@ namespace AspNetCore.Mvc.Jwt.WebApi
                 };
             });
 
-            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPolicyService, PolicyService>();
             services.AddScoped<IAccountService, AccountService>();
 
